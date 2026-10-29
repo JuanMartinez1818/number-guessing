@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Number Guessing Game</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: lightblue;
+            margin-top: 100px;
+        }
+
+        .game {
+            background: white;
+            padding: 25px;
+            display: inline-block;
+            border-radius: 10px;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="game">
+    <h1>Guess the Number</h1>
+
+    <p>Guess a number between 1 and 100.</p>
+
+    <input type="number" id="guess" placeholder="Enter your guess">
+
+    <br>
+
+    <button onclick="checkGuess()">Guess</button>
+    <button onclick="restartGame()">Restart</button>
+
+    <p id="message">Good luck!</p>
+    <p id="attempts">Attempts: 0</p>
+</div>
+
+<script>
+    let answer = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+    let gameOver = false;
+
+    function checkGuess() {
+        let guess = Number(document.getElementById("guess").value);
+        let message = document.getElementById("message");
+
+        if (gameOver) {
+            message.innerText = "Press Restart to play again.";
+            return;
+        }
+
+        if (guess < 1 || guess > 100 ||
+            document.getElementById("guess").value === "") {
+            message.innerText = "Enter a number from 1 to 100.";
+            return;
+        }
+
+        attempts++;
+
+        if (guess === answer) {
+            message.innerText = "Correct! You won!";
+            gameOver = true;
+        } else if (guess < answer) {
+            message.innerText = "Too low! Try again.";
+        } else {
+            message.innerText = "Too high! Try again.";
+        }
+
+        document.getElementById("attempts").innerText =
+            "Attempts: " + attempts;
+    }
+
+    function restartGame() {
+        answer = Math.floor(Math.random() * 100) + 1;
+        attempts = 0;
+        gameOver = false;
+
+        document.getElementById("guess").value = "";
+        document.getElementById("message").innerText = "Good luck!";
+        document.getElementById("attempts").innerText = "Attempts: 0";
+    }
+</script>
+
+</body>
+</html>
